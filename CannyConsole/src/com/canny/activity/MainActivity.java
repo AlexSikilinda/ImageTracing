@@ -1,4 +1,4 @@
-package com.canny;
+package com.canny.activity;
 
 import java.awt.EventQueue;
 
@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import java.awt.BorderLayout;
+
 
 import javax.swing.JButton;
 
@@ -16,7 +16,11 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JTextField;
+
+import com.canny.ImageUtil;
+
 
 public class MainActivity {
 
@@ -133,42 +137,79 @@ public class MainActivity {
 	private void init() {
 		gaussianKernelRadius = new JTextField();
 		gaussianKernelRadius.setText("2");
-		gaussianKernelRadius.setBounds(340, 128, 86, 20);
+		gaussianKernelRadius.setBounds(340, 98, 86, 20);
 		frame.getContentPane().add(gaussianKernelRadius);
 		gaussianKernelRadius.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("Gaussian Kernel Radius");
-		lblNewLabel.setBounds(453, 131, 321, 14);
+		lblNewLabel.setBounds(453, 101, 321, 14);
 		frame.getContentPane().add(lblNewLabel);
 
 		gaussianKernelWidth = new JTextField();
 		gaussianKernelWidth.setText("16");
-		gaussianKernelWidth.setBounds(340, 159, 86, 20);
+		gaussianKernelWidth.setBounds(340, 129, 86, 20);
 		frame.getContentPane().add(gaussianKernelWidth);
 		gaussianKernelWidth.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("Gaussian Kernel Width");
-		lblNewLabel_1.setBounds(453, 162, 321, 14);
+		lblNewLabel_1.setBounds(453, 132, 321, 14);
 		frame.getContentPane().add(lblNewLabel_1);
 
 		lowThreshold = new JTextField();
 		lowThreshold.setText("2.5");
-		lowThreshold.setBounds(340, 190, 86, 20);
+		lowThreshold.setBounds(340, 160, 86, 20);
 		frame.getContentPane().add(lowThreshold);
 		lowThreshold.setColumns(10);
 
 		JLabel lblLowthreshold = new JLabel("Low Threshold");
-		lblLowthreshold.setBounds(453, 193, 321, 14);
+		lblLowthreshold.setBounds(453, 163, 321, 14);
 		frame.getContentPane().add(lblLowthreshold);
 
 		highThreshold = new JTextField();
 		highThreshold.setText("7.5");
-		highThreshold.setBounds(340, 231, 86, 20);
+		highThreshold.setBounds(340, 201, 86, 20);
 		frame.getContentPane().add(highThreshold);
 		highThreshold.setColumns(10);
 
 		JLabel lblHighthreshold = new JLabel("High Threshold");
-		lblHighthreshold.setBounds(453, 234, 321, 14);
+		lblHighthreshold.setBounds(453, 204, 321, 14);
 		frame.getContentPane().add(lblHighthreshold);
+		
+		JButton btnFirstStep = new JButton("firstStep");
+		btnFirstStep.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FirstStepActivity firstStepActivity = new FirstStepActivity();
+				firstStepActivity.setSize(800,600);
+				firstStepActivity.setTitle("First step");
+				firstStepActivity.setVisible(true);
+				
+			}
+		});
+		btnFirstStep.setBounds(650, 269, 89, 23);
+		frame.getContentPane().add(btnFirstStep);
+		
+		JButton btnSecondStep = new JButton("Second Step");
+		btnSecondStep.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SecondStepActivity secondStepActivity = new SecondStepActivity();
+				secondStepActivity.setSize(800,600);
+				secondStepActivity.setTitle("Second step");
+				secondStepActivity.setVisible(true);
+			}
+		});
+		btnSecondStep.setBounds(650, 318, 89, 23);
+		frame.getContentPane().add(btnSecondStep);
+		
+		JButton btnThre = new JButton("thirdStep");
+		btnThre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ThirdStepActivity thirdStepActivity = new ThirdStepActivity();
+				thirdStepActivity.setSize(800,600);
+				thirdStepActivity.setTitle("Third step");
+				thirdStepActivity.setVisible(true);
+			}
+		});
+		btnThre.setBounds(650, 367, 89, 23);
+		frame.getContentPane().add(btnThre);
 	}
 }
