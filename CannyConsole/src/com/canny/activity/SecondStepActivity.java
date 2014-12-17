@@ -23,6 +23,7 @@ public class SecondStepActivity extends JFrame {
 	private JLabel imageResultLable;
 	private static final String IMAGE_SOURCE = "test.png";
 	private static final String IMAGE_RESULT = "step2.png";
+	private static final String IMAGE_SOURCE_FIST_STEP = "step1.png";
 
 	GradientCalculator convertor = new GradientCalculator(2f, 16);
 
@@ -45,7 +46,7 @@ public class SecondStepActivity extends JFrame {
 
 		imageSourceLabel = new JLabel("");
 		sourceImagePanel.add(imageSourceLabel);
-		imageSourceLabel.setIcon(new ImageIcon(IMAGE_SOURCE));
+		imageSourceLabel.setIcon(new ImageIcon(IMAGE_SOURCE_FIST_STEP));
 
 		resultImagePanel = new JPanel();
 		resultImagePanel.setBounds(481, 30, 293, 447);

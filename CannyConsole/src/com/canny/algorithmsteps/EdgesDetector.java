@@ -5,9 +5,9 @@ import java.util.Arrays;
 
 public class EdgesDetector extends AlgorithmStepBase {
 
-	int lowThreshold;
+	float lowThreshold;
 	
-	int highThreshold;
+	float highThreshold;
 	
 	int[] data;
 	
@@ -19,10 +19,10 @@ public class EdgesDetector extends AlgorithmStepBase {
 	private final static int MAGNITUDE_MAX = (int) (MAGNITUDE_SCALE * MAGNITUDE_LIMIT);
 	
 	//data - это то шо после первого степа получилось
-	public EdgesDetector(int low, int high, BufferedImage firstStepResult) {
+	public EdgesDetector(float low, float high) {
 		this.lowThreshold = low;
 		this.highThreshold = high;
-		data = convertToArray(firstStepResult);
+		//data = convertToArray(firstStepResult);
 		magnitude = convertToArray(sourceImage);
 	}
 	
