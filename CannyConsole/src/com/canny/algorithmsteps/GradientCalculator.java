@@ -33,7 +33,7 @@ public class GradientCalculator extends AlgorithmStepBase implements
 	public GradientCalculator(float kernelRadius, int kernelWidth) {
 		this.kernelRadius = kernelRadius;
 		this.kernelWidth = kernelWidth;
-		picsize = width * height;
+		
 	}
 
 	private void initArrays() {
@@ -84,7 +84,8 @@ public class GradientCalculator extends AlgorithmStepBase implements
 					yOffset += width;
 					xOffset++;
 				}
-
+				
+				/*System.out.println(index + " " + yConv.length + " " + xConv.length);*/
 				yConv[index] = sumY;
 				xConv[index] = sumX;
 			}
@@ -190,8 +191,17 @@ public class GradientCalculator extends AlgorithmStepBase implements
 
 	@Override
 	protected BufferedImage perfromStep() {
-		data = convertToArray(sourceImage);
+		picsize = width * height;
+		initArrays();
+		LuminanceConverter lc = new LuminanceConverter();
+		lc.process(sourceImage);
+		data = lc.result;
 		computeGradients();
 		return convertToBufferedImage(magnitude);
+	}
+
+	@Override
+	public int[] getFinalData() {
+		return magnitude;
 	}
 }

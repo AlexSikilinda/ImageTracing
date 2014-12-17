@@ -31,4 +31,9 @@ public class LuminanceConverter extends AlgorithmStepBase implements AlgorithmSt
 		return convertToBufferedImage(result);
 	}
 
+	@Override
+	public int[] getFinalData() {
+		return result;
+	}
+
 }

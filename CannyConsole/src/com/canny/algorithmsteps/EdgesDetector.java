@@ -74,4 +74,10 @@ public class EdgesDetector extends AlgorithmStepBase {
 		}
 	}
 
+	@Override
+	public int[] getFinalData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
