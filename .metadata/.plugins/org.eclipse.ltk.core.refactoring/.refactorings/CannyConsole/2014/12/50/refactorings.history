@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename compilation unit &apos;com.canny.Canny.java&apos; to &apos;CannyEdgeDetector.java&apos;&#x0D;&#x0A;- Original project: &apos;CannyConsole&apos;&#x0D;&#x0A;- Original element: &apos;com.canny.Canny.java&apos;&#x0D;&#x0A;- Renamed element: &apos;com.canny.CannyEdgeDetector.java&apos;" description="Rename compilation unit &apos;Canny.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;com.canny{Canny.java" name="CannyEdgeDetector.java" references="false" stamp="1418041696929" version="1.0"/>
-</session>

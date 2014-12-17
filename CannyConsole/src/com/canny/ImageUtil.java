@@ -9,8 +9,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ImageUtil {
-	
-	public static void generateImageEdge() throws IOException{
+	public static int count;
+
+	public static void generateImageEdge(float gaussianKernelRadius,
+			float lowThreshold, float highThreshold, int gaussianKernelWidth,
+			boolean contrastNormalized) throws IOException {
 		Image image = ImageIO.read(new File(MainActivity.IMAGE_ORIGINAL));
 
 		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),
@@ -19,13 +22,19 @@ public class ImageUtil {
 		bg.drawImage(image, 0, 0, null);
 		bg.dispose();
 
-		CannyEdgeDetector detector = new CannyEdgeDetector();
+		CannyEdgeDetector detector = new CannyEdgeDetector(
+				gaussianKernelRadius, lowThreshold, highThreshold,
+				gaussianKernelWidth, contrastNormalized);
 		detector.setSourceImage(bufferedImage);
 		detector.process();
 
 		BufferedImage edges = detector.getEdgesImage();
-		File f = new File(MainActivity.IMAGE_EDGE);
+		File f = new File(count+MainActivity.IMAGE_EDGE);
+		if (f.delete()) {
+			f = new File(count+MainActivity.IMAGE_EDGE);
+		}
 		ImageIO.write(edges, "PNG", f);
+		count++;
 
 	}
 
