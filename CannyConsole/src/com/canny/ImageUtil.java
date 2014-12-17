@@ -39,5 +39,22 @@ public class ImageUtil {
 		count++;
 
 	}
+	
+	public static BufferedImage getBufferedImage(String imageName) throws IOException{
+		Image image = ImageIO.read(new File(imageName));
+
+		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),
+				image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+		Graphics bg = bufferedImage.getGraphics();
+		bg.drawImage(image, 0, 0, null);
+		bg.dispose();
+		
+		return bufferedImage;
+	}
+	
+	public static void convertToImage(String imageName,BufferedImage bufferedImage) throws IOException{
+		File file = new File(imageName);
+		ImageIO.write(bufferedImage, "PNG", file);
+	}
 
 }

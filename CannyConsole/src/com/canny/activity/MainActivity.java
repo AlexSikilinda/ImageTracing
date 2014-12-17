@@ -7,8 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-
 import javax.swing.JButton;
 
 import java.awt.event.MouseAdapter;
@@ -20,7 +18,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
 import com.canny.ImageUtil;
-
 
 public class MainActivity {
 
@@ -112,7 +109,8 @@ public class MainActivity {
 					ImageUtil.generateImageEdge(gaussianKernelRadiusValue,
 							lowThresholdValue, highThresholdValue,
 							gaussianKernelWidthValue, contrastNormalizedValue);
-					imageLabel.setIcon(new ImageIcon((ImageUtil.count-1)+IMAGE_EDGE));
+					imageLabel.setIcon(new ImageIcon((ImageUtil.count - 1)
+							+ IMAGE_EDGE));
 					imagePanel.add(imageLabel);
 
 				} catch (IOException e1) {
@@ -174,37 +172,38 @@ public class MainActivity {
 		JLabel lblHighthreshold = new JLabel("High Threshold");
 		lblHighthreshold.setBounds(453, 204, 321, 14);
 		frame.getContentPane().add(lblHighthreshold);
-		
+
 		JButton btnFirstStep = new JButton("firstStep");
 		btnFirstStep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FirstStepActivity firstStepActivity = new FirstStepActivity();
-				firstStepActivity.setSize(800,600);
+				FirstStepActivity firstStepActivity = new FirstStepActivity(
+						IMAGE_ORIGINAL);
+				firstStepActivity.setSize(800, 600);
 				firstStepActivity.setTitle("First step");
 				firstStepActivity.setVisible(true);
-				
+
 			}
 		});
 		btnFirstStep.setBounds(650, 269, 89, 23);
 		frame.getContentPane().add(btnFirstStep);
-		
+
 		JButton btnSecondStep = new JButton("Second Step");
 		btnSecondStep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SecondStepActivity secondStepActivity = new SecondStepActivity();
-				secondStepActivity.setSize(800,600);
+				secondStepActivity.setSize(800, 600);
 				secondStepActivity.setTitle("Second step");
 				secondStepActivity.setVisible(true);
 			}
 		});
 		btnSecondStep.setBounds(650, 318, 89, 23);
 		frame.getContentPane().add(btnSecondStep);
-		
+
 		JButton btnThre = new JButton("thirdStep");
 		btnThre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ThirdStepActivity thirdStepActivity = new ThirdStepActivity();
-				thirdStepActivity.setSize(800,600);
+				thirdStepActivity.setSize(800, 600);
 				thirdStepActivity.setTitle("Third step");
 				thirdStepActivity.setVisible(true);
 			}
