@@ -1,7 +1,7 @@
 package com.canny.algorithmsteps;
 
+import java.awt.image.BufferedImage;
+
 public interface AlgorithmStep {
-	void process(int[] source);
-	int[] getSourceImage();
-	int[] getResultImage();
+	BufferedImage process(BufferedImage source);
 }
