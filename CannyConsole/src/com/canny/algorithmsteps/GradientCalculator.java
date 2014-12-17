@@ -14,17 +14,42 @@ public class GradientCalculator extends AlgorithmStepBase implements
 
 	int kernelWidth;
 
-	int[] source;
+	int[] data;
 
 	int[] result;
+
+	int picsize;
+
+	int[] magnitude;
+
+	float[] xConv;
+
+	float[] yConv;
+
+	float[] xGradient;
+
+	float[] yGradient;
 
 	public GradientCalculator(float kernelRadius, int kernelWidth) {
 		this.kernelRadius = kernelRadius;
 		this.kernelWidth = kernelWidth;
-
+		picsize = width * height;
 	}
 
-	private void computeGradients(float kernelRadius, int kernelWidth) {
+	private void initArrays() {
+
+		if (data == null || picsize != data.length) {
+			data = new int[picsize];
+			magnitude = new int[picsize];
+
+			xConv = new float[picsize];
+			yConv = new float[picsize];
+			xGradient = new float[picsize];
+			yGradient = new float[picsize];
+		}
+	}
+
+	private void computeGradients() {
 		float kernel[] = new float[kernelWidth];
 		float diffKernel[] = new float[kernelWidth];
 		int kwidth;
@@ -43,6 +68,120 @@ public class GradientCalculator extends AlgorithmStepBase implements
 		int maxX = width - (kwidth - 1);
 		int initY = width * (kwidth - 1);
 		int maxY = width * (height - (kwidth - 1));
+
+		for (int x = initX; x < maxX; x++) {
+			for (int y = initY; y < maxY; y += width) {
+				int index = x + y;
+				float sumX = data[index] * kernel[0];
+				float sumY = sumX;
+				int xOffset = 1;
+				int yOffset = width;
+				for (; xOffset < kwidth;) {
+					sumY += kernel[xOffset]
+							* (data[index - yOffset] + data[index + yOffset]);
+					sumX += kernel[xOffset]
+							* (data[index - xOffset] + data[index + xOffset]);
+					yOffset += width;
+					xOffset++;
+				}
+
+				yConv[index] = sumY;
+				xConv[index] = sumX;
+			}
+
+		}
+
+		for (int x = initX; x < maxX; x++) {
+			for (int y = initY; y < maxY; y += width) {
+				float sum = 0f;
+				int index = x + y;
+				for (int i = 1; i < kwidth; i++)
+					sum += diffKernel[i]
+							* (yConv[index - i] - yConv[index + i]);
+
+				xGradient[index] = sum;
+			}
+
+		}
+
+		for (int x = kwidth; x < width - kwidth; x++) {
+			for (int y = initY; y < maxY; y += width) {
+				float sum = 0.0f;
+				int index = x + y;
+				int yOffset = width;
+				for (int i = 1; i < kwidth; i++) {
+					sum += diffKernel[i]
+							* (xConv[index - yOffset] - xConv[index + yOffset]);
+					yOffset += width;
+				}
+
+				yGradient[index] = sum;
+			}
+
+		}
+
+		initX = kwidth;
+		maxX = width - kwidth;
+		initY = width * kwidth;
+		maxY = width * (height - kwidth);
+		for (int x = initX; x < maxX; x++) {
+			for (int y = initY; y < maxY; y += width) {
+				int index = x + y;
+				int indexN = index - width;
+				int indexS = index + width;
+				int indexW = index - 1;
+				int indexE = index + 1;
+				int indexNW = indexN - 1;
+				int indexNE = indexN + 1;
+				int indexSW = indexS - 1;
+				int indexSE = indexS + 1;
+
+				float xGrad = xGradient[index];
+				float yGrad = yGradient[index];
+				float gradMag = hypot(xGrad, yGrad);
+
+				float nMag = hypot(xGradient[indexN], yGradient[indexN]);
+				float sMag = hypot(xGradient[indexS], yGradient[indexS]);
+				float wMag = hypot(xGradient[indexW], yGradient[indexW]);
+				float eMag = hypot(xGradient[indexE], yGradient[indexE]);
+				float neMag = hypot(xGradient[indexNE], yGradient[indexNE]);
+				float seMag = hypot(xGradient[indexSE], yGradient[indexSE]);
+				float swMag = hypot(xGradient[indexSW], yGradient[indexSW]);
+				float nwMag = hypot(xGradient[indexNW], yGradient[indexNW]);
+				float tmp;
+
+				if (xGrad * yGrad <= (float) 0 /* (1) */
+				? Math.abs(xGrad) >= Math.abs(yGrad) /* (2) */
+				? (tmp = Math.abs(xGrad * gradMag)) >= Math.abs(yGrad * neMag
+						- (xGrad + yGrad) * eMag) /* (3) */
+						&& tmp > Math.abs(yGrad * swMag - (xGrad + yGrad)
+								* wMag) /* (4) */
+				: (tmp = Math.abs(yGrad * gradMag)) >= Math.abs(xGrad * neMag
+						- (yGrad + xGrad) * nMag) /* (3) */
+						&& tmp > Math.abs(xGrad * swMag - (yGrad + xGrad)
+								* sMag) /* (4) */
+				: Math.abs(xGrad) >= Math.abs(yGrad) /* (2) */
+				? (tmp = Math.abs(xGrad * gradMag)) >= Math.abs(yGrad * seMag
+						+ (xGrad - yGrad) * eMag) /* (3) */
+						&& tmp > Math.abs(yGrad * nwMag + (xGrad - yGrad)
+								* wMag) /* (4) */
+				: (tmp = Math.abs(yGrad * gradMag)) >= Math.abs(xGrad * seMag
+						+ (yGrad - xGrad) * sMag) /* (3) */
+						&& tmp > Math.abs(xGrad * nwMag + (yGrad - xGrad)
+								* nMag) /* (4) */
+				) {
+					magnitude[index] = gradMag >= MAGNITUDE_LIMIT ? MAGNITUDE_MAX
+							: (int) (MAGNITUDE_SCALE * gradMag);
+
+				} else {
+					magnitude[index] = 0;
+				}
+			}
+		}
+	}
+	
+	private float hypot(float x, float y) {
+		return (float) Math.hypot(x, y);
 	}
 
 	private float gaussian(float x, float sigma) {
@@ -51,8 +190,8 @@ public class GradientCalculator extends AlgorithmStepBase implements
 
 	@Override
 	protected BufferedImage perfromStep() {
-		// TODO Auto-generated method stub
-		return null;
+		data = convertToArray(sourceImage);
+		computeGradients();
+		return convertToBufferedImage(magnitude);
 	}
-
 }
