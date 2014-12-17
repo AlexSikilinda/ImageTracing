@@ -16,10 +16,10 @@ public abstract class AlgorithmStepBase implements AlgorithmStep {
 	}
 
 	protected BufferedImage convertToBufferedImage(int[] source) {
-		/*for (int i = 0; i < source.length; i++) {
-			source[i] = source[i] & 0xff;
+		for (int i = 0; i < source.length; i++) {
+			source[i] = (source[i] << 16) | (source[i] << 8) | source[i];
 			// source[i] = source[i] & 0xff000000;
-		}*/
+		}
 
 		BufferedImage edgesImage = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_RGB);
