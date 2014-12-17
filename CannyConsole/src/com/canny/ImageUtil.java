@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.canny.activity.MainActivity;
+
 public class ImageUtil {
 	public static int count;
 
