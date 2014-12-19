@@ -21,9 +21,7 @@ public class EdgesDetector extends AlgorithmStepBase {
 	//data - это то шо после первого степа получилось
 	public EdgesDetector(float low, float high) {
 		this.lowThreshold = low;
-		this.highThreshold = high;
-		//data = convertToArray(firstStepResult);
-		magnitude = convertToArray(sourceImage);
+		this.highThreshold = high;		
 	}
 	
 	@Override
