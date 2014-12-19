@@ -15,17 +15,16 @@ import javax.swing.JTextField;
 import com.canny.ImageUtil;
 import com.canny.algorithmsteps.EdgesDetector;
 
-
-public class ThirdStepActivity extends JFrame{
+public class ThirdStepActivity extends JFrame {
 	private JPanel sourceImagePanel;
 	private JPanel resultImagePanel;
-	
+
 	private JLabel imageSourceLabel;
 	private JLabel imageResultLable;
 	private static final String IMAGE_SOURCE = "test.png";
 	private static final String IMAGE_RESULT = "step3.png";
 	private static final String IMAGE_SOURCE_SECOND_STEP = "step2.png";
-	
+
 	private EdgesDetector convertor = new EdgesDetector(2.5f, 7.5f);
 
 	/**
@@ -33,7 +32,7 @@ public class ThirdStepActivity extends JFrame{
 	 */
 	public ThirdStepActivity() {
 		getContentPane().setLayout(null);
-		
+
 		initialize();
 
 	}
@@ -60,11 +59,9 @@ public class ThirdStepActivity extends JFrame{
 		btnProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					BufferedImage bufferedImage = ImageUtil
-							.getBufferedImage(IMAGE_SOURCE);
-					BufferedImage bufferedResult = convertor
-							.process(bufferedImage);
-					ImageUtil.convertToImage(IMAGE_RESULT, bufferedResult);
+					ImageUtil.step3(2f, 16, 2.f, 7.5f, false, IMAGE_SOURCE,
+							IMAGE_RESULT);
+
 					imageResultLable.setIcon(new ImageIcon(IMAGE_RESULT));
 					update();
 

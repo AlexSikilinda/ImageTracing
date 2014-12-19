@@ -31,16 +31,42 @@ public class ImageUtil {
 		detector.process();
 
 		BufferedImage edges = detector.getEdgesImage();
-		File f = new File(count+MainActivity.IMAGE_EDGE);
+		File f = new File(count + MainActivity.IMAGE_EDGE);
 		if (f.delete()) {
-			f = new File(count+MainActivity.IMAGE_EDGE);
+			f = new File(count + MainActivity.IMAGE_EDGE);
 		}
 		ImageIO.write(edges, "PNG", f);
 		count++;
 
 	}
-	
-	public static BufferedImage getBufferedImage(String imageName) throws IOException{
+
+	public static void step3(float gaussianKernelRadius, int gaussianKernelWidth,
+			float lowThreshold, float highThreshold,
+			boolean contrastNormalized, String imageSource, String imageEdge)
+			throws IOException {
+
+		Image image = ImageIO.read(new File(imageSource));
+
+		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),
+				image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+		Graphics bg = bufferedImage.getGraphics();
+		bg.drawImage(image, 0, 0, null);
+		bg.dispose();
+
+		CannyEdgeDetector detector = new CannyEdgeDetector(
+				gaussianKernelRadius, lowThreshold, highThreshold,
+				gaussianKernelWidth, contrastNormalized);
+		detector.setSourceImage(bufferedImage);
+		detector.process();
+
+		BufferedImage edges = detector.getEdgesImage();
+		File f = new File(imageEdge);
+		ImageIO.write(edges, "PNG", f);
+
+	}
+
+	public static BufferedImage getBufferedImage(String imageName)
+			throws IOException {
 		Image image = ImageIO.read(new File(imageName));
 
 		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),
@@ -48,11 +74,12 @@ public class ImageUtil {
 		Graphics bg = bufferedImage.getGraphics();
 		bg.drawImage(image, 0, 0, null);
 		bg.dispose();
-		
+
 		return bufferedImage;
 	}
-	
-	public static void convertToImage(String imageName,BufferedImage bufferedImage) throws IOException{
+
+	public static void convertToImage(String imageName,
+			BufferedImage bufferedImage) throws IOException {
 		File file = new File(imageName);
 		ImageIO.write(bufferedImage, "PNG", file);
 	}

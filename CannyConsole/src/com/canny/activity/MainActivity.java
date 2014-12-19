@@ -173,7 +173,7 @@ public class MainActivity {
 		lblHighthreshold.setBounds(453, 204, 321, 14);
 		frame.getContentPane().add(lblHighthreshold);
 
-		JButton btnFirstStep = new JButton("firstStep");
+		JButton btnFirstStep = new JButton("First Step");
 		btnFirstStep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FirstStepActivity firstStepActivity = new FirstStepActivity(
@@ -184,7 +184,7 @@ public class MainActivity {
 
 			}
 		});
-		btnFirstStep.setBounds(650, 269, 89, 23);
+		btnFirstStep.setBounds(515, 269, 224, 23);
 		frame.getContentPane().add(btnFirstStep);
 
 		JButton btnSecondStep = new JButton("Second Step");
@@ -196,10 +196,10 @@ public class MainActivity {
 				secondStepActivity.setVisible(true);
 			}
 		});
-		btnSecondStep.setBounds(650, 318, 89, 23);
+		btnSecondStep.setBounds(515, 318, 224, 23);
 		frame.getContentPane().add(btnSecondStep);
 
-		JButton btnThre = new JButton("thirdStep");
+		JButton btnThre = new JButton("Third Step");
 		btnThre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ThirdStepActivity thirdStepActivity = new ThirdStepActivity();
@@ -208,7 +208,7 @@ public class MainActivity {
 				thirdStepActivity.setVisible(true);
 			}
 		});
-		btnThre.setBounds(650, 367, 89, 23);
+		btnThre.setBounds(515, 367, 224, 23);
 		frame.getContentPane().add(btnThre);
 	}
 }
